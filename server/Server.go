@@ -38,7 +38,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			switch command {
 			case "get":
 				result := mapdb.Get(key)
-				if result == "" {
+				if result == nil {
 					fmt.Fprint(w, "'"+key+"' key not found")
 					return
 				}
