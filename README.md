@@ -14,10 +14,46 @@ go run main.go start-server <port>
 
 ## Client
 
-Start cli:
+### Start cli:
 
 ```
 go run main.go cli <server_url>
+```
+
+### Api:
+
+POST http://host:port
+
+Set command:
+
+```bash
+curl \
+'http://host:port' \
+-d '{"key":"name","value":"sojeb","command":"set"}'
+```
+
+Get command:
+
+```bash
+curl \
+'http://host:port' \
+-d '{"key":"name","command":"get"}'
+```
+
+Delete command:
+
+```bash
+curl \
+'http://host:port' \
+-d '{"key":"name","command":"delete"}'
+```
+
+Flush command:
+
+```bash
+curl \
+'http://host:port' \
+-d '{"command":"flush"}'
 ```
 
 ## Supported commands:
