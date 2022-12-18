@@ -1,7 +1,9 @@
 package server
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"strings"
 
@@ -22,9 +24,18 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	case "GET":
 
 	case "POST":
-		key := r.FormValue("key")
-		value := r.FormValue("value")
-		command := r.FormValue("command")
+		var bodyData map[string]any
+		b, _ := ioutil.ReadAll(r.Body)
+		err := json.Unmarshal([]byte(b), &bodyData)
+		if err != nil {
+			panic(err)
+		}
+		r.Body.Close()
+
+		key := bodyData["key"].(string)
+		value := bodyData["value"]
+		command := bodyData["command"].(string)
+		// command := r.FormValue("command")
 		command = strings.ToLower(command)
 
 		_commands := map[string]string{

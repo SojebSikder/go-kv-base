@@ -1,18 +1,26 @@
 # go-kv-base
 
-Simple database engine created with golang just for fun.
+Simple key value database created with golang just for fun.
 
-## Usage
+# Usage
 
-### In-memory key value based db
+## Server
 
-Run simple key value db from command line:
+Start server:
 
 ```
 go run main.go start-server <port>
 ```
 
-### Supported commands:
+## Client
+
+Start cli:
+
+```
+go run main.go cli <server_url>
+```
+
+## Supported commands:
 
 - Database oparations
 

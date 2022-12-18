@@ -7,10 +7,10 @@ import (
 	"os"
 
 	"github.com/sojebsikder/go-kv-base/server"
+	"github.com/sojebsikder/go-kv-base/src/engine/mapdb"
 )
 
 func main() {
-
 	// app info
 	appName := "go-kv-base"
 	version := "0.0.1"
@@ -29,10 +29,20 @@ func main() {
 			fmt.Println(appName + ": " + version)
 		} else if arg == "help" {
 			fmt.Println(description)
+		} else if arg == "cli" {
+			host := "http://localhost:8080"
+			if len(os.Args) > 2 {
+				host = os.Args[2]
+			}
+			if host == "" {
+				fmt.Println("server url not provided")
+				return
+			}
+			startCli(host)
 		} else if arg == "start-server" {
 
 			port := "8080"
-			if len(os.Args) > 1 {
+			if len(os.Args) > 2 {
 				port = os.Args[2]
 			}
 			startDBServer(port)
@@ -53,4 +63,8 @@ func startDBServer(port string) {
 	} else {
 		fmt.Println("Server started at " + port)
 	}
+}
+
+func startCli(_host string) {
+	mapdb.Cli(_host)
 }
