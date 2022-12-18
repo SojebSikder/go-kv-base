@@ -1,6 +1,8 @@
 # go-kv-base
 
-Simple key value database created with golang just for fun.
+Simple key value in-memory database created with golang just for fun.
+
+**Note: data stores in memory, so restarting the server will loose data**
 
 # Usage
 
