@@ -21,6 +21,6 @@ func Delete(key string) int {
 }
 func Flush() int {
 	kvlen := len(mapObject)
-	mapObject = nil
+	mapObject = map[string]string{}
 	return kvlen
 }

@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/sojebsikder/go-kv-base/src/engine/mapdb"
 )
@@ -24,16 +25,41 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		key := r.FormValue("key")
 		value := r.FormValue("value")
 		command := r.FormValue("command")
+		command = strings.ToLower(command)
 
-		switch command {
-		case "get":
-			result := mapdb.Get(key)
-			fmt.Fprint(w, result)
-
-		case "set":
-			result := mapdb.Set(key, value)
-			fmt.Fprint(w, result)
+		_commands := map[string]string{
+			"get":    "get",
+			"set":    "set",
+			"delete": "delete",
+			"flush":  "flush",
 		}
+
+		if _commands[command] == command {
+			switch command {
+			case "get":
+				result := mapdb.Get(key)
+				if result == "" {
+					fmt.Fprint(w, "'"+key+"' key not found")
+					return
+				}
+				fmt.Fprint(w, result)
+
+			case "set":
+				result := mapdb.Set(key, value)
+				fmt.Fprint(w, result)
+
+			case "delete":
+				result := mapdb.Delete(key)
+				fmt.Fprint(w, result)
+
+			case "flush":
+				result := mapdb.Flush()
+				fmt.Fprint(w, result)
+			}
+		} else {
+			fmt.Fprint(w, "'"+command+"' command not supported")
+		}
+
 	}
 }
 

@@ -1,4 +1,4 @@
-# go-base
+# go-kv-base
 
 Simple database engine created with golang just for fun.
 
