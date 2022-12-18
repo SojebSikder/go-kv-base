@@ -90,15 +90,15 @@ func Cli(host string) {
 			fmt.Scan(&value)
 
 			postBody, _ := json.Marshal(map[string]string{
-				"key":     "name",
-				"value":   "sojeb",
+				"key":     key,
+				"value":   value,
 				"command": "set",
 			})
 			result := makeRequest(host, postBody)
 			if result == "1" {
 				fmt.Println("Key added")
 			} else {
-				fmt.Println("res", result)
+				fmt.Println(result)
 			}
 
 		} else if cmd == "get" {
@@ -107,21 +107,28 @@ func Cli(host string) {
 			fmt.Print("Enter key: ")
 			fmt.Scan(&key)
 			postBody, _ := json.Marshal(map[string]string{
-				"key":     "name",
+				"key":     key,
 				"command": "get",
 			})
 			result := makeRequest(host, postBody)
-			fmt.Println("res", result)
+			fmt.Println(result)
 
 		} else if cmd == "delete" {
 
 			var key string
 			fmt.Print("Enter key: ")
 			fmt.Scan(&key)
-			// check if key exists
+
 			postBody, _ := json.Marshal(map[string]string{
-				"key":     "name",
+				"key":     key,
 				"command": "delete",
+			})
+			result := makeRequest(host, postBody)
+			fmt.Println(result)
+
+		} else if cmd == "flush" {
+			postBody, _ := json.Marshal(map[string]string{
+				"command": "flush",
 			})
 			result := makeRequest(host, postBody)
 			fmt.Println(result)

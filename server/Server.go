@@ -32,9 +32,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		}
 		r.Body.Close()
 
-		key := bodyData["key"].(string)
+		var key string
+		var command string
+		if bodyData["key"] != nil {
+			key = bodyData["key"].(string)
+		}
 		value := bodyData["value"]
-		command := bodyData["command"].(string)
+		if bodyData["command"] != nil {
+			command = bodyData["command"].(string)
+		}
 		// command := r.FormValue("command")
 		command = strings.ToLower(command)
 
