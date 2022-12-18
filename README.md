@@ -1,6 +1,8 @@
 # go-kv-base
 
-Simple key value database created with golang just for fun.
+Simple key value in-memory database created with golang just for fun.
+
+**Note: data stores in memory, so restarting the server will loose data**
 
 # Usage
 
@@ -18,6 +20,24 @@ go run main.go start-server <port>
 
 ```
 go run main.go cli <server_url>
+```
+
+Example:
+
+```
+set name sojeb
+```
+
+```
+get name
+```
+
+```
+delete name
+```
+
+```
+flush
 ```
 
 ### Api:
@@ -60,7 +80,7 @@ curl \
 
 - Database oparations
 
-  - Get
-  - Set
-  - Delete
-  - Flush
+  - Get - read value by key
+  - Set - set key value
+  - Delete - delete value by key
+  - Flush - delete all key value data

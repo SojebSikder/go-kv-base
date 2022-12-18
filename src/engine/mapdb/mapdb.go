@@ -61,7 +61,7 @@ func makeRequest(host string, postBody []byte) string {
 		log.Fatalln(err)
 	}
 	sb := string(body)
-	log.Print(sb)
+	// log.Print(sb)
 	return sb
 }
 
@@ -81,12 +81,12 @@ func Cli(host string) {
 			var key string
 			var value string
 
-			fmt.Print("Enter key: ")
+			// fmt.Print("Enter key: ")
 			fmt.Scan(&key)
 
 			// check if key already exists
 
-			fmt.Print("Enter value: ")
+			// fmt.Print("Enter value: ")
 			fmt.Scan(&value)
 
 			postBody, _ := json.Marshal(map[string]string{
@@ -104,7 +104,7 @@ func Cli(host string) {
 		} else if cmd == "get" {
 
 			var key string
-			fmt.Print("Enter key: ")
+			// fmt.Print("Enter key: ")
 			fmt.Scan(&key)
 			postBody, _ := json.Marshal(map[string]string{
 				"key":     key,
@@ -116,7 +116,7 @@ func Cli(host string) {
 		} else if cmd == "delete" {
 
 			var key string
-			fmt.Print("Enter key: ")
+			// fmt.Print("Enter key: ")
 			fmt.Scan(&key)
 
 			postBody, _ := json.Marshal(map[string]string{
