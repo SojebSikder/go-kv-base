@@ -20,6 +20,24 @@ go run main.go start-server <port>
 go run main.go cli <server_url>
 ```
 
+Example:
+
+```
+set name sojeb
+```
+
+```
+get name
+```
+
+```
+delete name
+```
+
+```
+flush
+```
+
 ### Api:
 
 POST http://host:port
@@ -60,7 +78,7 @@ curl \
 
 - Database oparations
 
-  - Get
-  - Set
-  - Delete
-  - Flush
+  - Get - read value by key
+  - Set - set key value
+  - Delete - delete value by key
+  - Flush - delete all key value data
