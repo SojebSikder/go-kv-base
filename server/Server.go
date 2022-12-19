@@ -18,6 +18,8 @@ func typeof(v interface{}) string {
 		return "float64"
 	case map[string]interface{}:
 		return "map"
+	case []interface{}:
+		return "[]map"
 	//... etc
 	default:
 		return "unknown"
@@ -73,12 +75,21 @@ func handler(w http.ResponseWriter, r *http.Request) {
 					fmt.Fprint(w, "'"+key+"' key not found")
 					return
 				}
+				// fmt.Print(reflect.TypeOf(result))
 				objType := typeof(result)
 
 				switch objType {
 				case "map":
 					w.Header().Set("Content-Type", "application/json")
-					json.NewEncoder(w).Encode(result)
+					// json.NewEncoder(w).Encode(result)
+					jData, _ := json.Marshal(result)
+					w.Write(jData)
+
+				case "[]map":
+					w.Header().Set("Content-Type", "application/json")
+					jData, _ := json.Marshal(result)
+					w.Write(jData)
+
 				default:
 					fmt.Fprint(w, result)
 				}
