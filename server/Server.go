@@ -10,6 +10,22 @@ import (
 	"github.com/sojebsikder/go-kv-base/src/engine/mapdb"
 )
 
+func typeof(v interface{}) string {
+	switch v.(type) {
+	case int:
+		return "int"
+	case float64:
+		return "float64"
+	case map[string]interface{}:
+		return "map"
+	case []interface{}:
+		return "[]map"
+	//... etc
+	default:
+		return "unknown"
+	}
+}
+
 func handler(w http.ResponseWriter, r *http.Request) {
 	// fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
 	// u, err := url.Parse(r.URL.String())
@@ -59,7 +75,24 @@ func handler(w http.ResponseWriter, r *http.Request) {
 					fmt.Fprint(w, "'"+key+"' key not found")
 					return
 				}
-				fmt.Fprint(w, result)
+				// fmt.Print(reflect.TypeOf(result))
+				objType := typeof(result)
+
+				switch objType {
+				case "map":
+					w.Header().Set("Content-Type", "application/json")
+					// json.NewEncoder(w).Encode(result)
+					jData, _ := json.Marshal(result)
+					w.Write(jData)
+
+				case "[]map":
+					w.Header().Set("Content-Type", "application/json")
+					jData, _ := json.Marshal(result)
+					w.Write(jData)
+
+				default:
+					fmt.Fprint(w, result)
+				}
 
 			case "set":
 				result := mapdb.Set(key, value)
